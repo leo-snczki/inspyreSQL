@@ -5,15 +5,20 @@
       "version": "3.12"
     }
   },
-   "customizations": {
+  "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.black-formatter",
         "oderwat.indent-rainbow",
         "kevinrose.vsc-python-indent",
         "ms-azuretools.vscode-docker",
-        "redhat.vscode-yaml"   
+        "redhat.vscode-yaml"
       ]
     }
-  }
+  },
+  "forwardPorts": [
+    8080,  // Porta do PHPMyAdmin
+    3306   // Porta do MySQL
+  ],
+  "shutdownAction": "none"
 }

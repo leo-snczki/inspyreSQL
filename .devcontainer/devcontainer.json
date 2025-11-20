@@ -10,7 +10,9 @@
       "extensions": [
         "ms-python.black-formatter",
         "oderwat.indent-rainbow",
-        "kevinrose.vsc-python-indent"
+        "kevinrose.vsc-python-indent",
+        "ms-azuretools.vscode-docker",
+        "redhat.vscode-yaml"   
       ]
     }
   }

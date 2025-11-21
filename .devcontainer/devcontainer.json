@@ -15,10 +15,5 @@
         "redhat.vscode-yaml"
       ]
     }
-  },
-  "forwardPorts": [
-    8080,  // Porta do PHPMyAdmin
-    3306   // Porta do MySQL
-  ],
-  "shutdownAction": "none"
+  }
 }

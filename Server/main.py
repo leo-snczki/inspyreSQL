@@ -32,6 +32,64 @@ def handle_client(conn, addr):
                 break
 
             request = pickle.loads(data)
+            objetivo = request.get("objetivo")
+
+            if objetivo == "login":
+                resposta = autenticar(
+                    db, cursor, request["nif"], request["senha"], request["tipo"]
+                )
+
+            elif objetivo == "registar":
+                resposta = registar_utilizador(
+                    db, cursor, request["dados"], request["tipo"]
+                )
+
+            elif objetivo == "marcar_consulta":
+                resposta = marcar_consulta(
+                    db,
+                    cursor,
+                    request["paciente_nif"],
+                    request["medico_nif"],
+                    request["data"],
+                    request["hora"],
+                    request["motivo"],
+                )
+
+            elif objetivo == "listar_consultas_medico":
+                resposta = listar_consultas_medico(db, cursor, request["medico_nif"])
+
+            elif objetivo == 'atualizar_consulta_medico':
+                resposta = atualizar_consulta_medico(
+                    db, cursor,
+                    request['consulta_id'],
+                    request['medico_nif'],
+                    request['nova_data'],
+                    request['nova_hora']
+                )
+
+            elif objetivo == 'atualizar_consulta_paciente':
+                resposta = atualizar_consulta_paciente(
+                    db, cursor,
+                    request['consulta_id'],
+                    request['paciente_nif'],
+                    request['nova_data'],
+                    request['nova_hora']
+                )
+            elif objetivo == 'cancelar_consulta_medico':
+                resposta = cancelar_consulta_medico(db, cursor, request['consulta_id'], request['medico_nif'])
+
+            elif objetivo == 'cancelar_consulta_paciente':
+                resposta = cancelar_consulta_paciente(db, cursor, request['consulta_id'], request['paciente_nif'])
+
+            elif objetivo == "atender_consulta":
+                resposta = atender_consulta(
+                    db, cursor, request["consulta_id"], request["medico_nif"]
+                )
+
+            elif objetivo == "listar_consultas_paciente":
+                resposta = listar_consultas_paciente(db, cursor, request["paciente_nif"])
+            else:
+                resposta = "ACAO_INVALIDA"
 
             conn.send(pickle.dumps(resposta))
 

@@ -3,6 +3,7 @@ import pickle
 from readkeys import getch
 from datetime import datetime, timedelta, time
 import terminal
+from valid import ValidadorInputs
 from menu import (
     menu_medico,
     menu_paciente,
@@ -69,33 +70,29 @@ def registar(tipo):
     terminal.limpar_term()
     print(f" REGISTO DE {tipo.upper()} ")
 
-    nif = input("Digite o NIF: ")
-    senha = input("Digite a senha: ")
-    nome = input("Digite o nome: ")
-    idade = int(input("Digite a idade: "))
-    email = input("Digite o email: ")
-
-    dados = {"nif": nif, "nome": nome, "idade": idade,
-             "email": email, "senha": senha}
-
     if tipo == "paciente":
-        dados["utente"] = input("Digite o número de utente: ")
+        dados = ValidadorInputs.preencher_paciente()
     elif tipo == "medico":
-        dados["especialidade"] = input("Digite a especialidade: ")
-        dados["salario"] = float(input("Digite o salário: "))
+        dados = ValidadorInputs.preencher_medico()
     elif tipo == "secretario":
-        dados["lugar_trabalho"] = input("Digite o lugar de trabalho: ")
-        dados["salario"] = float(input("Digite o salário: "))
+        dados = ValidadorInputs.preencher_secretario()
+    else:
+        print("Tipo inválido.")
+        getch()
+        return
 
     request = {"objetivo": "registar", "tipo": tipo, "dados": dados}
 
     resposta = enviar_request(request)
-    if resposta is "TIPO_INVALIDO":
+    if resposta == "TIPO_INVALIDO":
         print("Tipo de utilizador inválido.")
         getch()
         login()
+        return
+
     print(resposta)
     getch()
+
 
 
 def pegar_data_obj():

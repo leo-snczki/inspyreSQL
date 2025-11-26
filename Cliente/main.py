@@ -70,16 +70,14 @@ def registar(tipo):
     terminal.limpar_term()
     print(f" REGISTO DE {tipo.upper()} ")
 
-    if tipo == "paciente":
-        dados = ValidadorInputs.preencher_paciente()
-    elif tipo == "medico":
-        dados = ValidadorInputs.preencher_medico()
-    elif tipo == "secretario":
-        dados = ValidadorInputs.preencher_secretario()
-    else:
-        print("Tipo inválido.")
-        getch()
-        return
+    match tipo:
+        case "paciente":
+            dados = ValidadorInputs.preencher_paciente()
+        case "medico":
+            dados = ValidadorInputs.preencher_medico()
+        case "secretario":
+            dados = ValidadorInputs.preencher_secretario()
+        # não deve ser possivel chegar no case _
 
     request = {"objetivo": "registar", "tipo": tipo, "dados": dados}
 

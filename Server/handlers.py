@@ -21,7 +21,10 @@ def autenticar(db, cursor, nif, senha, tipo):
         case _:
             return "LOGIN_FALHADO"
 
-    return cursor.fetchone()
+    resultado = cursor.fetchone()
+    if resultado is None:
+        return "LOGIN_FALHADO"
+    return resultado
 
 
 def registar_utilizador(db, cursor, dados, tipo):

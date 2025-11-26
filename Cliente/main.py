@@ -33,37 +33,43 @@ def enviar_request(request, timeout=10):
 
 
 def login():
-    terminal.limpar_term()
-    print("LOGIN")
-    mostrar_menu(menu_tipos())
-    numero_tipo = input("qual o tipo de utilizador: ")
-    terminal.limpar_term()
-    match numero_tipo:
-        case "1":
-            tipo = "medico"
-        case "2":
-            tipo = "paciente"
-        case "3":
-            tipo = "secretario"
-        case "0":
-            main()
-        # não deve ser possivel chegar no case _
+    while True:
+        terminal.limpar_term()
+        print("LOGIN")
+        mostrar_menu(menu_tipos())
+        numero_tipo = input("Qual o tipo de utilizador: ")
+        terminal.limpar_term()
 
-    nif = ValidadorInputs.solicitar_nif()
-    senha = ValidadorInputs.solicitar_senha()
+        match numero_tipo:
+            case "1":
+                tipo = "medico"
+            case "2":
+                tipo = "paciente"
+            case "3":
+                tipo = "secretario"
+            case "0":
+                main()
+                return
+            case _:
+                print("Opção inválida. Tente novamente.")
+                terminal.click_para_continuar()
+                continue
 
-    request = {"objetivo": "login", "tipo": tipo, "nif": nif, "senha": senha}
-    resposta = enviar_request(request)
+        nif = ValidadorInputs.solicitar_nif()
+        senha = ValidadorInputs.solicitar_senha()
 
-    if resposta is "LOGIN_FALHADO":
-        print("\nNIF e/ou senha incorretos. Tente novamente.")
-        terminal.click_para_continuar()
-        login()
+        request = {"objetivo": "login", "tipo": tipo, "nif": nif, "senha": senha}
+        resposta = enviar_request(request)
 
-    else:
-        print(f"\nLogin efetuado com sucesso! Bem-vindo(a) {resposta['nome']}")
-        terminal.click_para_continuar()
-        return {"tipo": tipo, "dados": resposta}
+        if resposta == "LOGIN_FALHADO":
+            print("\nNIF e/ou senha incorretos ou tipo de utilizador inexistente. Tente novamente.")
+            terminal.click_para_continuar()
+            continue
+        else:
+            print(f"\nLogin efetuado com sucesso! Bem-vindo(a) {resposta['nome']}")
+            terminal.click_para_continuar()
+            return {"tipo": tipo, "dados": resposta}
+
 
 
 def registar(tipo):

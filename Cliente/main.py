@@ -49,8 +49,8 @@ def login():
             main()
         # não deve ser possivel chegar no case _
 
-    nif = input("Digite o NIF: ")
-    senha = input("Digite a senha: ")
+    nif = ValidadorInputs.solicitar_nif()
+    senha = ValidadorInputs.solicitar_senha()
 
     request = {"objetivo": "login", "tipo": tipo, "nif": nif, "senha": senha}
     resposta = enviar_request(request)

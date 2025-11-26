@@ -1,17 +1,26 @@
 import mysql.connector
 
 
-def autenticar(cursor, nif, senha, tipo):
-    if tipo == "medico":
-        cursor.execute("SELECT * FROM medico WHERE nif=%s AND senha=%s", (nif, senha))
-    elif tipo == "paciente":
-        cursor.execute("SELECT * FROM paciente WHERE nif=%s AND senha=%s", (nif, senha))
-    elif tipo == "secretario":
-        cursor.execute(
-            "SELECT * FROM secretaria WHERE nif=%s AND senha=%s", (nif, senha)
-        )
-    else:
-        return "LOGIN_FALHADO"
+def autenticar(db, cursor, nif, senha, tipo):
+    match tipo:
+        case "medico":
+            cursor.execute(
+                "SELECT * FROM medico WHERE nif=%s AND senha=%s",
+                (nif, senha)
+            )
+        case "paciente":
+            cursor.execute(
+                "SELECT * FROM paciente WHERE nif=%s AND senha=%s",
+                (nif, senha)
+            )
+        case "secretario":
+            cursor.execute(
+                "SELECT * FROM secretaria WHERE nif=%s AND senha=%s",
+                (nif, senha)
+            )
+        case _:
+            return "LOGIN_FALHADO"
+
     return cursor.fetchone()
 
 

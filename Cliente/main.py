@@ -92,25 +92,6 @@ def registar(tipo):
     getch()
 
 
-
-def pegar_data_obj():
-    while True:
-        data = input("\nData (YYYY-MM-DD): ")
-        try:
-            return datetime.strptime(data, "%Y-%m-%d").date()
-        except ValueError:
-            print("[ERRO]: Use formato YYYY-MM-DD e uma data real.\n")
-
-
-def pegar_hora_obj():
-    while True:
-        hora = input("\nHora (HH:MM:SS): ")
-        try:
-            return datetime.strptime(hora, "%H:%M:%S").time()
-        except ValueError:
-            print("[ERRO]: Use formato HH:MM:SS e um horário real.\n")
-
-
 def marcar_consulta(paciente_nif):
     terminal.limpar_term()
     print("MARCAR CONSULTA")
@@ -123,8 +104,8 @@ def marcar_consulta(paciente_nif):
 
     while True:
         try:
-            data_obj = pegar_data_obj()
-            hora_obj = pegar_hora_obj()
+            data_obj = ValidadorInputs.pegar_data_obj()
+            hora_obj = ValidadorInputs.pegar_hora_obj()
             data_hora = datetime.combine(data_obj, hora_obj)
             validar_datahora(data_hora)
             break
@@ -291,8 +272,8 @@ def atualizar_consulta_medico(medico_nif):
         return
     consulta_id = int(consulta_id)
 
-    data = pegar_data_obj()
-    hora = pegar_hora_obj()
+    data = ValidadorInputs.pegar_data_obj()
+    hora = ValidadorInputs.pegar_hora_obj()
     nova_datahora = datetime.combine(data, hora)
     validar_datahora(nova_datahora)
 
@@ -319,8 +300,8 @@ def atualizar_consulta_paciente(paciente_nif):
         return
     consulta_id = int(consulta_id)
 
-    data = pegar_data_obj()
-    hora = pegar_hora_obj()
+    data = ValidadorInputs.pegar_data_obj()
+    hora = ValidadorInputs.pegar_hora_obj()
     nova_datahora = datetime.combine(data, hora)
     validar_datahora(nova_datahora)
 

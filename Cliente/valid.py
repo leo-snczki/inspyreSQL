@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, time
+
 class ValidadorInputs:
 
     @classmethod
@@ -107,3 +109,20 @@ class ValidadorInputs:
         dados["lugar_trabalho"] = cls.solicitar_lugar_trabalho()
         dados["salario"] = cls.solicitar_salario()
         return dados
+
+def pegar_data_obj():
+    while True:
+        data = input("\nData (YYYY-MM-DD): ")
+        try:
+            return datetime.strptime(data, "%Y-%m-%d").date()
+        except ValueError:
+            print("[ERRO]: Use formato YYYY-MM-DD e uma data real.\n")
+
+
+def pegar_hora_obj():
+    while True:
+        hora = input("\nHora (HH:MM:SS): ")
+        try:
+            return datetime.strptime(hora, "%H:%M:%S").time()
+        except ValueError:
+            print("[ERRO]: Use formato HH:MM:SS e um horário real.\n")

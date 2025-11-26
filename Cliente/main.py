@@ -87,7 +87,7 @@ def registar(tipo):
     if resposta == "TIPO_INVALIDO":
         print("Tipo de utilizador inválido.")
         getch()
-        login()
+        registar()
         return
 
     print(resposta)
